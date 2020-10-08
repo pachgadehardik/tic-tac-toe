@@ -7,20 +7,24 @@ public class TicTacToeGame {
 
 	static char player1Input;
 	static char player2Input;
-
+	static char board[];
+	
 	// Creates a Board
 	public static char[] createBoard() {
-		char[] board = new char[10];
+		 board = new char[10];
 		for (int i = 1; i < board.length; i++) {
 			board[i] = ' ';
 		}
 		return board;
 	}
-
-	public static void displayBoard(char[] arr) {
-		for (int i = 0; i < arr.length; i++) {
-			System.out.println(arr[i] + " ");
-		}
+	
+	//displays Board
+	public static void displayBoard() {
+		System.out.println(board[1] + " | " + board[2] + " | " + board[3]);
+		System.out.println("----------");
+		System.out.println(board[4] + " | " + board[5] + " | " + board[6]);
+		System.out.println("----------");
+		System.out.println(board[7] + " | " + board[8] + " | " + board[9]);
 	}
 
 	// Input the Character
@@ -41,12 +45,20 @@ public class TicTacToeGame {
 		printLettersAssigned();
 		scanner.close();
 	}
+	
+	public static void printBoard() {
+	
+	}
 
 	public static void main(String args[]) {
 		System.out.println("Welcome to Tic Tac toe game!!");
-		// creating a board
-		displayBoard(createBoard());
+		//Determine Player Letter
 		determinePlayerOption();
+		// creating a board 
+		createBoard();
+		//Displaying Board
+		displayBoard();
+		
 
 	}
 }
