@@ -33,7 +33,7 @@ public class TicTacToeGame {
 	// Determine Player's option
 	public static void determinePlayerOption() {
 
-		System.out.println("Enter the Input: ");
+		System.out.println("Enter the Player 1 Letter: ");
 		Scanner scanner = new Scanner(System.in);
 		player1Input = scanner.next().charAt(0);
 
@@ -46,8 +46,6 @@ public class TicTacToeGame {
 		System.out.println("Welcome to Tic Tac toe game!!");
 		// creating a board
 		displayBoard(createBoard());
-		player1Input = 'X';
-		player2Input = 'O';
 		determinePlayerOption();
 
 	}
