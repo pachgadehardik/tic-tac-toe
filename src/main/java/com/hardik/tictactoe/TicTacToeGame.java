@@ -73,16 +73,20 @@ public class TicTacToeGame {
 
 	}
 	
+	/**
+	 * To determine 1st player
+	 */
 	public static void toss() {
 		int result = (int) Math.round(Math.random());
 		if(result == HEAD) {
 			System.out.println("Player 1 wins the toss");
 			// Determine Player Letter
 			determinePlayerOption(HEAD);
-			
 		}
+		else {
 		System.out.println("Computer won the Toss");
 		determinePlayerOption(TAILS);
+		}
 	}
 
 	/*
