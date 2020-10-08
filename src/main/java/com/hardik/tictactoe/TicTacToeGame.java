@@ -50,10 +50,11 @@ public class TicTacToeGame {
 	/**
 	 * to check and validate the given index
 	 */
-	public static int checkIndex(int index) {
+	public static int checkIndex_ReturnIndex(int index) {
 		if (index < 10 && index > 0) {
 			if (board[index] == ' ') {
 				System.out.println("Given Position is Empty");
+				board[index] = player1Input;
 				return index;
 			}
 			System.out.println("Given Position is not Empty");
@@ -77,9 +78,9 @@ public class TicTacToeGame {
 		showBoard();
 		// checking the index is free or not and valid
 		int index = scanner.nextInt();
-		int validIndex = checkIndex(index);
+		int validIndex = checkIndex_ReturnIndex(index);
 		if (validIndex != -1)
-			System.out.println("Index :" + validIndex + " is Valid");
+			showBoard();
 		scanner.close();
 
 	}
