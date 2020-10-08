@@ -5,7 +5,6 @@ public class TicTacToeService {
 	public Character[] createBoard() {
 		
 		Character arr[] = new Character[10];
-//		arr = null;
 		return arr;
 	}
 	
