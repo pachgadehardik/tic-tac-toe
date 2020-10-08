@@ -21,7 +21,7 @@ public class TicTacToeService {
 	/**
 	 * Creates a Board
 	 */
-	public static char[] createBoard() {
+	public char[] createBoard() {
 		board = new char[10];
 		for (int i = 1; i < board.length; i++) {
 			board[i] = ' ';
@@ -32,7 +32,7 @@ public class TicTacToeService {
 	/**
 	 * displays Board
 	 */
-	public static void showBoard() {
+	public void showBoard() {
 		System.out.println(board[1] + " | " + board[2] + " | " + board[3]);
 		System.out.println("----------");
 		System.out.println(board[4] + " | " + board[5] + " | " + board[6]);
@@ -40,7 +40,7 @@ public class TicTacToeService {
 		System.out.println(board[7] + " | " + board[8] + " | " + board[9]);
 	}
 
-	public static void printLettersAssigned() {
+	public void printLettersAssigned() {
 		System.out.println("PLayer 1 is : " + player1Input);
 		System.out.println("Computer is : " + player2Input);
 
@@ -49,7 +49,7 @@ public class TicTacToeService {
 	/**
 	 * Determining Players Letter
 	 */
-	public static void determinePlayerOption(int result) {
+	public void determinePlayerOption(int result) {
 		if (result == HEAD) {
 			System.out.println("Enter the Player 1 Letter: ");
 			player1Input = scanner.next().charAt(0);
@@ -67,14 +67,13 @@ public class TicTacToeService {
 	/**
 	 * to check and validate the given index
 	 */
-	public static int checkIndex_MakeMove(char winner) {
+	public int checkIndex_MakeMove(char winner) {
 
 		int index = scanner.nextInt();
 		if (index < 10 && index > 0) {
 			if (board[index] == ' ') {
 				board[index] = winner;
 				checkWinner();
-//				showBoard();
 				return index;
 			}
 			System.out.println("Given Position is not Empty");
@@ -87,7 +86,7 @@ public class TicTacToeService {
 	/**
 	 * To determine 1st player
 	 */
-	public static void toss() {
+	public void toss() {
 		int result = (int) Math.round(Math.random());
 		if (result == HEAD) {
 			System.out.println("Player 1 wins the toss");
@@ -102,7 +101,7 @@ public class TicTacToeService {
 	/**
 	 * to check whether someone has Won
 	 */
-	public static boolean checkWinner() {
+	public boolean checkWinner() {
 		for (int winnerCase = 0; winnerCase < 8; winnerCase++) {
 			String concatThreeValues = "";
 			switch (winnerCase) {
@@ -142,14 +141,8 @@ public class TicTacToeService {
 		return false;
 	}
 
-	/**
-	 * Generating Random Numbers
-	 */
-	public static int getRandomInteger(int maximum, int minimum) {
-		return ((int) (Math.random() * (maximum - minimum))) + minimum;
-	}
 
-	private static boolean checkForCorners_MoveNext() {
+	private boolean checkForCorners_MoveNext() {
 		OptionalInt corner = Arrays.stream(corner_index).filter(e -> board[e] == ' ').findFirst();
 		if (corner.isPresent()) {
 			board[corner.getAsInt()] = player2Input;
@@ -158,7 +151,7 @@ public class TicTacToeService {
 			return false;
 	}
 
-	private static boolean checkForCenter_MoveNext() {
+	private boolean checkForCenter_MoveNext() {
 		if (board[5] == ' ') {
 			board[5] = player2Input;
 			return true;
@@ -167,7 +160,7 @@ public class TicTacToeService {
 
 	}
 
-	private static boolean checkForAvailableEdges_MoveNext() {
+	private boolean checkForAvailableEdges_MoveNext() {
 		OptionalInt edge = Arrays.stream(edge_index).filter(e -> board[e] == ' ').findFirst();
 		if (edge.isPresent()) {
 			board[edge.getAsInt()] = player2Input;
@@ -179,7 +172,7 @@ public class TicTacToeService {
 	/**
 	 * Function to automate Computers Logic
 	 */
-	public static void playComputerWithHuman(char player2Input) {
+	public void playComputerWithHuman(char player2Input) {
 		if (checkWhetherWinningToBlock(player2Input)) {
 			return;
 		}
@@ -198,8 +191,7 @@ public class TicTacToeService {
 
 	}
 
-	public static int checkCombination(String concatThreeValues, char winner) {
-		System.out.println(concatThreeValues + "-------" + concatThreeValues.length());
+	public int checkCombination(String concatThreeValues, char winner) {
 		if (concatThreeValues.equals(winner + " " + winner))
 			return 2;
 		if (concatThreeValues.equals(winner + winner + " "))
@@ -214,7 +206,7 @@ public class TicTacToeService {
 	/**
 	 * Checking Whether opponent is going to win
 	 */
-	private static boolean checkWhetherWinningToBlock(char winner) {
+	private boolean checkWhetherWinningToBlock(char winner) {
 		boolean actionPerformed = false;
 		for (int winnerCase = 0; winnerCase < 8; winnerCase++) {
 			String concatThreeValues = "";
@@ -223,7 +215,6 @@ public class TicTacToeService {
 				concatThreeValues = "" + board[1] + board[2] + board[3];
 				System.out.println(concatThreeValues);
 				int blockPlay = checkCombination(concatThreeValues, winner);
-				System.out.println("Block Case 1");
 				if (blockPlay != 0) {
 					board[blockPlay] = winner;
 					actionPerformed = true;
@@ -231,7 +222,6 @@ public class TicTacToeService {
 				break;
 			case 1:
 				concatThreeValues = "" + board[4] + board[5] + board[6];
-				System.out.println(concatThreeValues);
 				int blockPlay1 = checkCombination(concatThreeValues, winner);
 				if (blockPlay1 != 0) {
 					board[3 + blockPlay1] = winner;
@@ -240,7 +230,6 @@ public class TicTacToeService {
 				break;
 			case 2:
 				concatThreeValues = "" + board[7] + board[8] + board[9];
-				System.out.println(concatThreeValues);
 				int blockPlay2 = checkCombination(concatThreeValues, winner);
 				if (blockPlay2 != 0) {
 					board[6 + blockPlay2] = winner;
@@ -249,9 +238,7 @@ public class TicTacToeService {
 				break;
 			case 3:
 				concatThreeValues = "" + board[1] + board[4] + board[7];
-				System.out.println(concatThreeValues);
 				int blockPlay3 = checkCombination(concatThreeValues, winner);
-				System.out.println("Retureneekjdfnda,j" + blockPlay3);
 				if (blockPlay3 == 1) {
 					board[1] = winner;
 					actionPerformed = true;
@@ -268,7 +255,6 @@ public class TicTacToeService {
 				break;
 			case 4:
 				concatThreeValues = "" + board[2] + board[5] + board[8] + "";
-				System.out.println(concatThreeValues);
 				int blockPlay4 = checkCombination(concatThreeValues, winner);
 				if (blockPlay4 == 1) {
 					board[2] = player2Input;
@@ -285,7 +271,6 @@ public class TicTacToeService {
 				break;
 			case 5:
 				concatThreeValues = "" + board[3] + board[6] + board[9];
-				System.out.println(concatThreeValues);
 				int blockPlay5 = checkCombination(concatThreeValues, winner);
 				if (blockPlay5 == 1) {
 					board[3] = player2Input;
@@ -302,7 +287,6 @@ public class TicTacToeService {
 				break;
 			case 6:
 				concatThreeValues = "" + board[1] + board[5] + board[9];
-				System.out.println(concatThreeValues);
 				int blockPlay6 = checkCombination(concatThreeValues, winner);
 				if (blockPlay6 == 1) {
 					board[1] = player2Input;
@@ -319,7 +303,6 @@ public class TicTacToeService {
 				break;
 			case 7:
 				concatThreeValues = "" + board[3] + board[5] + board[7];
-				System.out.println(concatThreeValues);
 				int blockPlay7 = checkCombination(concatThreeValues, winner);
 				if (blockPlay7 == 1) {
 					board[3] = player2Input;
@@ -343,7 +326,7 @@ public class TicTacToeService {
 	/**
 	 * Starting the Game
 	 */
-	public static void startGame() {
+	public void startGame() {
 		int count = 0;
 
 		while (count < 9) {
@@ -370,4 +353,6 @@ public class TicTacToeService {
 			count++;
 		}
 	}
+		
+	
 }
