@@ -10,7 +10,9 @@ public class TicTacToeGame {
 	static char player1Input;
 	static char player2Input;
 	static char board[];
+	static char winner;
 	static Scanner scanner = new Scanner(System.in);
+	
 	/**
 	 * Creates a Board
 	 */
@@ -47,10 +49,12 @@ public class TicTacToeGame {
 			System.out.println("Enter the Player 1 Letter: ");
 			player1Input = scanner.next().charAt(0);
 			player2Input = player1Input == 'X' ? 'O' : 'X';
+			winner = player1Input;
 		} else {
 			System.out.println("Enter the Computer Letter: ");
 			player2Input = scanner.next().charAt(0);
 			player1Input = player2Input == 'X' ? 'O' : 'X';
+			winner = player2Input;
 		}
 		printLettersAssigned();
 	}
@@ -58,12 +62,14 @@ public class TicTacToeGame {
 	/**
 	 * to check and validate the given index
 	 */
-	public static int checkIndex_MakeMove() {
+	public static int checkIndex_MakeMove(char winner) {
 		int index = scanner.nextInt();
 		if (index < 10 && index > 0) {
 			if (board[index] == ' ') {
 				System.out.println("Given Position is Empty");
-				board[index] = player1Input;
+				board[index] = winner;
+				checkWinner();
+				showBoard();
 				return index;
 			}
 			System.out.println("Given Position is not Empty");
@@ -78,17 +84,79 @@ public class TicTacToeGame {
 	 */
 	public static void toss() {
 		int result = (int) Math.round(Math.random());
-		if(result == HEAD) {
+		if (result == HEAD) {
 			System.out.println("Player 1 wins the toss");
 			// Determine Player Letter
 			determinePlayerOption(HEAD);
-		}
-		else {
-		System.out.println("Computer won the Toss");
-		determinePlayerOption(TAILS);
+		} else {
+			System.out.println("Computer won the Toss");
+			determinePlayerOption(TAILS);
 		}
 	}
-
+	
+	public static boolean checkWinner() {
+		for (int winnerCase = 0; winnerCase < 8; winnerCase++) {
+			String concatThreeValues = null;
+			switch (winnerCase) {
+			case 0:
+				concatThreeValues += board[1] + board[2] + board[3];
+				break;
+			case 1:
+				concatThreeValues += board[4] + board[5] + board[6];
+				break;
+			case 2:
+				concatThreeValues += board[7] + board[8] + board[9];
+				break;
+			case 3:
+				concatThreeValues += board[1] + board[4] + board[7];
+				break;
+			case 4:
+				concatThreeValues += board[2] + board[5] + board[8];
+				break;
+			case 5:
+				concatThreeValues += board[3] + board[6] + board[9];
+				break;
+			case 6:
+				concatThreeValues += board[1] + board[5] + board[9];
+				break;
+			case 7:
+				concatThreeValues += board[3] + board[5] + board[7];
+				break;
+			}
+			if (concatThreeValues.equalsIgnoreCase("XXX")) {
+				System.out.println("Player with X wins");
+				return true;
+			} else if (concatThreeValues.equalsIgnoreCase("OOO")) {
+				System.out.println("Player with O wins");
+				return true;
+			} 
+		}
+		return false;
+	}
+	
+	public static void startGame() {
+		int count = 0;
+		while(count++ < 9) {
+			if(winner == player1Input) {
+				checkIndex_MakeMove(player1Input);
+				if(checkWinner() == true) break;
+				showBoard();
+				checkIndex_MakeMove(player2Input);
+				if(checkWinner() ==true) break;
+				showBoard();
+			}
+			else {
+				checkIndex_MakeMove(player2Input);
+				if(checkWinner() == true) break;
+				showBoard();
+				checkIndex_MakeMove(player1Input);
+				if(checkWinner() ==true) break;
+				showBoard();
+			}
+			
+		}
+	}
+	
 	/*
 	 * Main Method
 	 */
@@ -100,10 +168,14 @@ public class TicTacToeGame {
 		toss();
 		// creating a board
 		createBoard();
+		
+		System.out.println("Start the game!!");
+		startGame();
 		// Displaying Board
 		showBoard();
 		// checking the index is free or not and valid and making the move
-		checkIndex_MakeMove();
+		
+//		checkIndex_MakeMove();
 		showBoard();
 		scanner.close();
 		
