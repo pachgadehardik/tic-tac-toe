@@ -54,7 +54,7 @@ public class TicTacToeGame {
 		// creating a board 
 		createBoard();
 		//Displaying Board
-		displayBoard();
+		showBoard();
 		
 
 	}
