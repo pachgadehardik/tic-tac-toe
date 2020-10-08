@@ -3,11 +3,14 @@ package com.hardik.tictactoe;
 import java.util.Scanner;
 
 public class TicTacToeGame {
-
+	
+	static final int HEAD=1; //for player 1
+	static final int TAILS=0; //for computer
+	
 	static char player1Input;
 	static char player2Input;
 	static char board[];
-
+	static Scanner scanner = new Scanner(System.in);
 	/**
 	 * Creates a Board
 	 */
@@ -39,18 +42,24 @@ public class TicTacToeGame {
 	/**
 	 * Determining Players Letter
 	 */
-	public static void determinePlayerOption() {
-		System.out.println("Enter the Player 1 Letter: ");
-		Scanner scanner = new Scanner(System.in);
-		player1Input = scanner.next().charAt(0);
-		player2Input = player1Input == 'X' ? 'O' : 'X';
+	public static void determinePlayerOption(int result) {
+		if (result == HEAD) {
+			System.out.println("Enter the Player 1 Letter: ");
+			player1Input = scanner.next().charAt(0);
+			player2Input = player1Input == 'X' ? 'O' : 'X';
+		} else {
+			System.out.println("Enter the Computer Letter: ");
+			player2Input = scanner.next().charAt(0);
+			player1Input = player2Input == 'X' ? 'O' : 'X';
+		}
 		printLettersAssigned();
 	}
 
 	/**
 	 * to check and validate the given index
 	 */
-	public static int checkIndex_ReturnIndex(int index) {
+	public static int checkIndex_MakeMove() {
+		int index = scanner.nextInt();
 		if (index < 10 && index > 0) {
 			if (board[index] == ' ') {
 				System.out.println("Given Position is Empty");
@@ -63,25 +72,36 @@ public class TicTacToeGame {
 		return -1;
 
 	}
+	
+	public static void toss() {
+		int result = (int) Math.round(Math.random());
+		if(result == HEAD) {
+			System.out.println("Player 1 wins the toss");
+			// Determine Player Letter
+			determinePlayerOption(HEAD);
+			
+		}
+		System.out.println("Computer won the Toss");
+		determinePlayerOption(TAILS);
+	}
 
 	/*
 	 * Main Method
 	 */
 	public static void main(String args[]) {
-		Scanner scanner = new Scanner(System.in);
+		
 		System.out.println("Welcome to Tic Tac toe game!!");
-		// Determine Player Letter
-		determinePlayerOption();
+		
+		//Determine the turn by doing Toss
+		toss();
 		// creating a board
 		createBoard();
 		// Displaying Board
 		showBoard();
-		// checking the index is free or not and valid
-		int index = scanner.nextInt();
-		int validIndex = checkIndex_ReturnIndex(index);
-		if (validIndex != -1)
-			showBoard();
+		// checking the index is free or not and valid and making the move
+		checkIndex_MakeMove();
+		showBoard();
 		scanner.close();
-
+		
 	}
 }
