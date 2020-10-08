@@ -66,10 +66,9 @@ public class TicTacToeGame {
 		int index = scanner.nextInt();
 		if (index < 10 && index > 0) {
 			if (board[index] == ' ') {
-				System.out.println("Given Position is Empty");
 				board[index] = winner;
 				checkWinner();
-				showBoard();
+//				showBoard();
 				return index;
 			}
 			System.out.println("Given Position is not Empty");
@@ -96,47 +95,48 @@ public class TicTacToeGame {
 	
 	public static boolean checkWinner() {
 		for (int winnerCase = 0; winnerCase < 8; winnerCase++) {
-			String concatThreeValues = null;
+			String concatThreeValues = "";
 			switch (winnerCase) {
 			case 0:
-				concatThreeValues += board[1] + board[2] + board[3];
+				concatThreeValues = "" +board[1] + board[2] + board[3];
 				break;
 			case 1:
-				concatThreeValues += board[4] + board[5] + board[6];
+				concatThreeValues = ""+ board[4] + board[5] + board[6];
 				break;
 			case 2:
-				concatThreeValues += board[7] + board[8] + board[9];
+				concatThreeValues = ""+ board[7] + board[8] + board[9];
 				break;
 			case 3:
-				concatThreeValues += board[1] + board[4] + board[7];
+				concatThreeValues = ""+board[1] + board[4] + board[7];
 				break;
 			case 4:
-				concatThreeValues += board[2] + board[5] + board[8];
+				concatThreeValues =""+ board[2] + board[5] + board[8];
 				break;
 			case 5:
-				concatThreeValues += board[3] + board[6] + board[9];
+				concatThreeValues = ""+board[3] + board[6] + board[9];
 				break;
 			case 6:
-				concatThreeValues += board[1] + board[5] + board[9];
+				concatThreeValues = ""+board[1] + board[5] + board[9];
 				break;
 			case 7:
-				concatThreeValues += board[3] + board[5] + board[7];
+				concatThreeValues =""+ board[3] + board[5] + board[7];
 				break;
 			}
-			if (concatThreeValues.equalsIgnoreCase("XXX")) {
+			if (concatThreeValues.equals("XXX")) {
 				System.out.println("Player with X wins");
 				return true;
-			} else if (concatThreeValues.equalsIgnoreCase("OOO")) {
+			} else if (concatThreeValues.equals("OOO")) {
 				System.out.println("Player with O wins");
 				return true;
 			} 
+			System.out.println();
 		}
 		return false;
 	}
 	
 	public static void startGame() {
 		int count = 0;
-		while(count++ < 9) {
+		while(count < 9) {
 			if(winner == player1Input) {
 				checkIndex_MakeMove(player1Input);
 				if(checkWinner() == true) break;
@@ -153,7 +153,7 @@ public class TicTacToeGame {
 				if(checkWinner() ==true) break;
 				showBoard();
 			}
-			
+		count++;
 		}
 	}
 	
@@ -168,15 +168,11 @@ public class TicTacToeGame {
 		toss();
 		// creating a board
 		createBoard();
-		
 		System.out.println("Start the game!!");
 		startGame();
 		// Displaying Board
 		showBoard();
 		// checking the index is free or not and valid and making the move
-		
-//		checkIndex_MakeMove();
-		showBoard();
 		scanner.close();
 		
 	}
